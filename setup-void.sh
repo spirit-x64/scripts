@@ -12,8 +12,8 @@ doas xbps-install -yu util-linux
 # install deps required for setup
 doas xbps-install -y git rsync make gcc libX11-devel libXft-devel libXinerama-devel xorg-server xinit xauth xorg-fonts xorg-input-drivers pkg-config
 
-mkdir $HOME/repos/
-cd $HOME/repos
+mkdir ./.setup-void.temp
+cd ./.setup-void.temp
 
 git clone https://github.com/spirit-x64/dotfiles.git
 git clone https://github.com/spirit-x64/dwm.git
@@ -45,3 +45,6 @@ juliaup add 1.0.0
 juliaup add 1.10
 juliaup add 1.11
 juliaup default 1.10
+
+# clean up
+rm -fr ./.setup-void.temp/
