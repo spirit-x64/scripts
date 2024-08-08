@@ -20,7 +20,7 @@ git clone https://github.com/spirit-x64/dwm.git
 git clone https://github.com/spirit-x64/dmenu.git
 git clone https://github.com/spirit-x64/st.git
 
-rsync -a --exclude='.git/' --exclude='LICENSE' dotfiles/ $HOME
+rsync -a --exclude='.git/' --exclude='LICENSE' --exclude='.gitignore' dotfiles/ $HOME
 
 cd dwm
 doas make clean install
