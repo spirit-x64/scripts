@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# TODO: setup network using iwd
+# TODO: setup PolicyKit
+# TODO: setup lightdm
+# TODO: setup compositor
+# TODO: install nvidia drivers (if nvidia gpu installed)
+
 # update the package manager
 sudo xbps-install -Suy xbps
 
