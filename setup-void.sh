@@ -37,6 +37,8 @@ doas make clean install
 cd ../st
 doas make clean install
 
+cd ..
+
 echo 'exec dwm' > $HOME/.xinitrc
 
 # system full-update
