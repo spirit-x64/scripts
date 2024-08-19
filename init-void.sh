@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$USERNAME" ]; then
-USERNAME="spirit"
+	USERNAME="spirit"
 fi
 
 cp /usr/share/xbps.d/*-repository-*.conf /etc/xbps.d/
@@ -13,7 +13,7 @@ xbps-remove -y base-voidstrap
 xbps-reconfigure -fa
 
 useradd -m -G wheel -s /bin/bash $USERNAME
-ed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
 if [[ "$1" == "--wsl" ]]; then
 cat <<EOF > /etc/wsl.conf
