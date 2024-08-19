@@ -45,8 +45,9 @@ else
 	doas="sudo"
 fi
 
-# update the package manager
+# system full-update
 $doas xbps-install -Suy xbps
+$doas xbps-install -Suy
 
 # setup doas
 if [ install_doas == 1 ]; then
@@ -55,8 +56,6 @@ if [ install_doas == 1 ]; then
 	doas="doas"
 fi
 
-# update conflicted deps
-$doas xbps-install -yu util-linux
 # install deps required for setup
 $doas xbps-install -y git make gcc libX11-devel libXft-devel libXinerama-devel xorg-server xinit xauth xorg-fonts xorg-input-drivers pkg-config
 
@@ -87,8 +86,6 @@ cd ..
 
 echo 'exec dwm' > $HOME/.xinitrc
 
-# system full-update
-$doas xbps-install -Suy
 # install other packages i use
 $doas xbps-install -y patch wget curl vim firefox vscode juliaup yt-dlp tree
 
