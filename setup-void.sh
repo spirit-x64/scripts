@@ -39,19 +39,20 @@ while [ $# -gt 0 ]; do
 	shift
 done
 
-# update the package manager
-sudo xbps-install -Suy xbps
-
-# setup doas
-if [ install_doas -eq 1 ]; then
-	sudo xbps-install -y opendoas
-	sudo bash -c "echo 'permit nopass $USER as root' > /etc/doas.conf"
-fi
-
 if command -v doas &> /dev/null; then
 	doas="doas"
 else
 	doas="sudo"
+fi
+
+# update the package manager
+$doas xbps-install -Suy xbps
+
+# setup doas
+if [ install_doas -eq 1 ]; then
+	$doas xbps-install -y opendoas
+	$doas bash -c "echo 'permit nopass $USER as root' > /etc/doas.conf"
+	doas="doas"
 fi
 
 # update conflicted deps
