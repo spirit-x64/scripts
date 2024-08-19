@@ -8,12 +8,14 @@
 
 
 install_doas=1
+sync_dotfiles=1
 
 usage() {
 	echo "Usage: $0 [OPTIONS]"
 	echo 'Options:'
 	echo ' -h, --help   Display this message'
 	echo " --no-doas    Don't install doas"
+	echo " --no-sync    Don't Sync dotfiles"
 }
 
 while [ $# -gt 0 ]; do
@@ -24,6 +26,9 @@ while [ $# -gt 0 ]; do
 			;;
 		--no-doas)
 			install_doas=0
+			;;
+		--no-sync)
+			sync_dotfiles=0
 			;;
 		*)
 			echo "Invalid argument: $1" >&2
@@ -52,17 +57,21 @@ fi
 # update conflicted deps
 $doas xbps-install -yu util-linux
 # install deps required for setup
-$doas xbps-install -y git rsync make gcc libX11-devel libXft-devel libXinerama-devel xorg-server xinit xauth xorg-fonts xorg-input-drivers pkg-config
+$doas xbps-install -y git make gcc libX11-devel libXft-devel libXinerama-devel xorg-server xinit xauth xorg-fonts xorg-input-drivers pkg-config
 
 mkdir ./.setup-void.temp
 cd ./.setup-void.temp
 
-git clone https://github.com/spirit-x64/dotfiles.git
+if [ sync_dotfiles -eq 1 ]; then
+	$doas xbps-install -y rsync
+	git clone https://github.com/spirit-x64/dotfiles.git
+	rsync -a --exclude='.git/' --exclude='LICENSE' --exclude='.gitignore' dotfiles/ $HOME
+fi
+
 git clone https://github.com/spirit-x64/dwm.git
 git clone https://github.com/spirit-x64/dmenu.git
 git clone https://github.com/spirit-x64/st.git
 
-rsync -a --exclude='.git/' --exclude='LICENSE' --exclude='.gitignore' dotfiles/ $HOME
 
 cd dwm
 $doas make clean install
