@@ -49,7 +49,7 @@ fi
 $doas xbps-install -Suy xbps
 
 # setup doas
-if [ install_doas -eq 1 ]; then
+if [ install_doas == 1 ]; then
 	$doas xbps-install -y opendoas
 	$doas bash -c "echo 'permit nopass $USER as root' > /etc/doas.conf"
 	doas="doas"
@@ -63,7 +63,7 @@ $doas xbps-install -y git make gcc libX11-devel libXft-devel libXinerama-devel x
 mkdir ./.setup-void.temp
 cd ./.setup-void.temp
 
-if [ sync_dotfiles -eq 1 ]; then
+if [ sync_dotfiles == 1 ]; then
 	$doas xbps-install -y rsync
 	git clone https://github.com/spirit-x64/dotfiles.git
 	rsync -a --exclude='.git/' --exclude='LICENSE' --exclude='.gitignore' dotfiles/ $HOME
