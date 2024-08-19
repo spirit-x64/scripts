@@ -10,6 +10,7 @@
 install_doas=1
 sync_dotfiles=1
 install_gui=1
+install_julia=1
 
 usage() {
 	echo "Usage: $0 [OPTIONS]"
@@ -18,6 +19,7 @@ usage() {
 	echo " --no-doas    Don't install doas"
 	echo " --no-sync    Don't Sync dotfiles"
 	echo " --no-gui     Don't install GUI things"
+	echo " --no-julia   Don't install Julia Programming Language"
 }
 
 while [ $# -gt 0 ]; do
@@ -34,6 +36,9 @@ while [ $# -gt 0 ]; do
 			;;
 		--no-gui)
 			install_gui=0
+			;;
+		--no-julia)
+			install_julia=0
 			;;
 		*)
 			echo "Invalid argument: $1" >&2
@@ -96,13 +101,16 @@ if [ install_gui == 1 ]; then
 	$doas xbps-install -y firefox vscode godot
 fi
 
-$doas ln -s /usr/bin/julialauncher /usr/bin/julia
+if [ install_julia == 1 ]; then
+	$doas xbps-install -y juliaup
+	$doas ln -s /usr/bin/julialauncher /usr/bin/julia
 
-juliaup self update
-juliaup add 1.0.0
-juliaup add 1.10
-juliaup add 1.11
-juliaup default 1.10
+	juliaup self update
+	juliaup add 1.0.0
+	juliaup add 1.10
+	juliaup add 1.11
+	juliaup default 1.10
+fi
 
 # clean up
 rm -fr ./.setup-void.temp/
