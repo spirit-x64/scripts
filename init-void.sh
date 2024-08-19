@@ -15,6 +15,9 @@ xbps-reconfigure -fa
 useradd -m -G wheel -s /bin/bash $USERNAME
 sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
+xbps-install -y opendoas
+bash -c "echo 'permit nopass $USERNAME as root' > /etc/doas.conf"
+
 if [[ "$1" == "--wsl" ]]; then
 cat <<EOF > /etc/wsl.conf
 [user]
