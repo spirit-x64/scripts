@@ -23,7 +23,7 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 
 echo downloading wsl_update_x64...
-curl.exe -Ls --remote-name --remove-on-error https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
+curl.exe -LSfs --remote-name --remove-on-error https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
 wsl_update_x64.msi
 del "wsl_update_x64.msi"
 
