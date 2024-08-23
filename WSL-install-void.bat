@@ -19,8 +19,8 @@ curl.exe -LSfs --remote-name --remove-on-error https://repo-default.voidlinux.or
 wsl.exe --import %DISTRONAME% %STORAGEPATH% extracted\void-x86_64-ROOTFS-20240314.tar
 
 echo downloading init-void.sh and setup-void.sh...
-curl.exe -LSfs --remote-name --remove-on-error https://raw.githubusercontent.com/spirit-x64/scripts/main/init-void.sh
-curl.exe -LSfs --remote-name --remove-on-error https://raw.githubusercontent.com/spirit-x64/scripts/main/setup-void.sh
+curl.exe -LSfs --remote-name --remove-on-error https://raw.githubusercontent.com/spirit-x64/scripts/main/void-init.sh
+curl.exe -LSfs --remote-name --remove-on-error https://raw.githubusercontent.com/spirit-x64/scripts/main/void-setup.sh
 
 wsl -d %DISTRONAME% -e sh -c "USERNAME=%USER% ./init-void.sh --wsl"
 
