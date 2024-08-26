@@ -9,7 +9,14 @@ command -v uglifyjs >/dev/null 2>&1 || { echo "Error: to install missing deps ru
 command -v cleancss >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js cleancss svgo" >&2; exit 1; }
 command -v svgo >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js cleancss svgo" >&2; exit 1; }
 
-html_file=index.html
+if [[ $# -eq 0 ]]; then
+    html_file=index.html
+else
+    html_file="$1"
+    dir=$PWD
+    cd $(dirname $html_file)
+    html_file=$(basename $html_file)
+fi
 
 if [[ -f "$html_file" ]]; then
     awk '
@@ -65,6 +72,6 @@ if [[ -f "$html_file" ]]; then
     echo generated "min.${html_file}"
 fi
 
-
 # Clean up generated files
 rm min.*.js min.*.css min.*.svg "${html_file}.tmp"
+cd $dir
