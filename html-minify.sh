@@ -68,7 +68,10 @@ if [[ -f "$html_file" ]]; then
         fi
     done < "${html_file}.tmp"
 
-    cp "$html_file" ".original-${html_file}"
+    if [[ ! -f ".original-${html_file}" ]]; then
+        cp "$html_file" ".original-${html_file}"
+    fi
+
     echo generated ".original-${html_file}"
     html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true "${html_file}.tmp" > "$html_file"
 fi
