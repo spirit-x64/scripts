@@ -4,10 +4,10 @@
 # - if html line have two paths only one file considered
 # - fails if js file has backticks
 
-command -v html-minifier >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js cleancss svgo" >&2; exit 1; }
-command -v uglifyjs >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js cleancss svgo" >&2; exit 1; }
-command -v cleancss >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js cleancss svgo" >&2; exit 1; }
-command -v svgo >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js cleancss svgo" >&2; exit 1; }
+command -v html-minifier >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js clean-css-cli svgo" >&2; exit 1; }
+command -v uglifyjs >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js clean-css-cli svgo" >&2; exit 1; }
+command -v cleancss >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js clean-css-cli svgo" >&2; exit 1; }
+command -v svgo >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js clean-css-cli svgo" >&2; exit 1; }
 
 if [[ $# -eq 0 ]]; then
     html_file=index.html
