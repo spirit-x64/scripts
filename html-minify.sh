@@ -19,6 +19,7 @@ else
 fi
 
 if [[ -f "$html_file" ]]; then
+    original_sizes=$(stat -c %s $html_file)
     awk '
     {
         if (match($0, /<script src="([^"]+\.js)"><\/script>/)) {
@@ -43,6 +44,7 @@ if [[ -f "$html_file" ]]; then
             if [[ "$file" == SVG:* ]]; then
                 file="${file#SVG:}"
                 if [[ -f "$file" ]]; then
+                    original_sizes=$(($original_sizes + $(stat -c %s $file)))
                     svgo "$file" -o "min.${file}"
                     svg_content=$(cat "min.${file}" | sed 's/</\%3C/g; s/>/\%3E/g; s/#/\%23/g; s/"/'"'"'/g')
                     sed -i "s|´SVG:${file}´|<link rel=\"shortcut icon\" type=\"image/svg+xml\" href=\"data:image/svg+xml,${svg_content}\">|" "${html_file}.tmp"
@@ -50,6 +52,7 @@ if [[ -f "$html_file" ]]; then
                     echo "Warning: SVG file $file not found."
                 fi
             elif [[ -f "$file" ]]; then
+                original_sizes=$(($original_sizes + $(stat -c %s $file)))
                 if [[ "$file" == *.js ]]; then
                     start_tag='<script>'
                     end_tag='<\/script>'
@@ -74,6 +77,13 @@ if [[ -f "$html_file" ]]; then
 
     echo generated ".original-${html_file}"
     html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true "${html_file}.tmp" > "$html_file"
+
+    final_size=$(stat -c %s $html_file)
+
+    echo
+    echo === $html_file minified ===
+    echo "$original_sizes bytes => $final_size bytes"
+    echo reduced by $(($original_sizes - $final_size)) bytes - $((100 - (100 * $final_size / $original_sizes)))%
 fi
 
 # Clean up generated files
