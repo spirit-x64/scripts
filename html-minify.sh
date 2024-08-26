@@ -77,5 +77,5 @@ if [[ -f "$html_file" ]]; then
 fi
 
 # Clean up generated files
-rm min.*.js min.*.css min.*.svg "${html_file}.tmp"
+rm min.*.js min.*.css min.*.svg "${html_file}.tmp" 2> /dev/null
 cd $dir
