@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Known issues:
-# - if html line have two paths only one file considered
+# - it graps only one file path from each HTML line and removes other paths in the same line 
 # - fails if js file has backticks
 
 command -v html-minifier >/dev/null 2>&1 || { echo "Error: to install missing deps run: npm i -g html-minifier uglify-js clean-css-cli svgo" >&2; exit 1; }
@@ -36,7 +36,7 @@ if [[ -f "$html_file" ]]; then
         }
     }
     ' "$html_file" > "${html_file}.tmp"
-    # Minify and replace content
+
     while IFS= read -r line; do
         if [[ $line =~ ´([^\"]+)´ ]]; then
             file="${BASH_REMATCH[1]}"
