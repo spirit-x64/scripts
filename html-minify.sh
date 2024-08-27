@@ -28,7 +28,7 @@ if [[ -f "$html_file" ]]; then
         } else if (match($0, /<link rel="stylesheet" href="([^"]+\.css)">/)) {
             file = substr($0, RSTART+29, RLENGTH-31)
             print "´"file"´\n"substr($0, RSTART+31+length(file))
-        } else if (match($0, /<link rel="shortcut icon" type="image\/svg\+xml" href="([^"]+\.svg)">/)) {
+        } else if (match($0, /<link rel="icon" type="image\/svg\+xml" href="([^"]+\.svg)">/)) {
             file = substr($0, RSTART+53, RLENGTH-55)
             print "´SVG:"file"´\n"substr($0, RSTART+55+length(file))
         } else {
@@ -47,7 +47,7 @@ if [[ -f "$html_file" ]]; then
                     original_sizes=$(($original_sizes + $(stat -c %s $file)))
                     svgo "$file" -o "min.${file}"
                     svg_content=$(cat "min.${file}" | sed 's/</\%3C/g; s/>/\%3E/g; s/#/\%23/g; s/"/'"'"'/g')
-                    sed -i "s|´SVG:${file}´|<link rel=\"shortcut icon\" type=\"image/svg+xml\" href=\"data:image/svg+xml,${svg_content}\">|" "${html_file}.tmp"
+                    sed -i "s|´SVG:${file}´|<link rel=\"icon\" type=\"image/svg+xml\" href=\"data:image/svg+xml,${svg_content}\">|" "${html_file}.tmp"
                 else
                     echo "Warning: SVG file $file not found."
                 fi
