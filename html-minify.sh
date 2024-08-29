@@ -29,8 +29,8 @@ if [[ -f "$html_file" ]]; then
             file = substr($0, RSTART+29, RLENGTH-31)
             print "´"file"´\n"substr($0, RSTART+31+length(file))
         } else if (match($0, /<link rel="icon" type="image\/svg\+xml" href="([^"]+\.svg)">/)) {
-            file = substr($0, RSTART+53, RLENGTH-55)
-            print "´SVG:"file"´\n"substr($0, RSTART+55+length(file))
+            file = substr($0, RSTART+44, RLENGTH-46)
+            print "´SVG:"file"´\n"substr($0, RSTART+46+length(file))
         } else {
             print $0
         }
